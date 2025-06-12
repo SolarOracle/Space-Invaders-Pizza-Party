@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cn7l07gfr6vmc"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerTest.gd" id="1_xx0xm"]
+[ext_resource type="Texture2D" uid="uid://cmm4wcmir7l8w" path="res://Sprites/icon.svg" id="2_7l5hj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_el1ww"]
+size = Vector2(128, 128)
+
+[node name="PlayerTest" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_xx0xm")
+move_spd = 200.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_7l5hj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_el1ww")
+
+[node name="Weapon" type="Node2D" parent="."]
+position = Vector2(0, -80)
