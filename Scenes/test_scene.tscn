@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cki7ah6tp0bq4"]
+[gd_scene load_steps=5 format=3 uid="uid://cki7ah6tp0bq4"]
 
 [ext_resource type="PackedScene" uid="uid://cn7l07gfr6vmc" path="res://Scenes/player_test.tscn" id="1_m1o75"]
+[ext_resource type="PackedScene" uid="uid://bdwlh0kelrt81" path="res://Scenes/block.tscn" id="2_3lgnt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tagr6"]
 size = Vector2(1166, 60)
@@ -15,7 +16,9 @@ position = Vector2(576, 607)
 collision_mask = 8
 
 [node name="BoundsUp" type="StaticBody2D" parent="."]
+scale = Vector2(1, 0.995166)
 collision_layer = 8
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoundsUp"]
 position = Vector2(573, -20)
@@ -35,3 +38,17 @@ collision_layer = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BoundsRight"]
 position = Vector2(-1.5, 316.5)
 shape = SubResource("RectangleShape2D_qyak5")
+
+[node name="Blocks" type="Node" parent="."]
+
+[node name="Block" parent="Blocks" instance=ExtResource("2_3lgnt")]
+position = Vector2(230.4, 523)
+
+[node name="Block2" parent="Blocks" instance=ExtResource("2_3lgnt")]
+position = Vector2(460.8, 523)
+
+[node name="Block3" parent="Blocks" instance=ExtResource("2_3lgnt")]
+position = Vector2(691.2, 523)
+
+[node name="Block4" parent="Blocks" instance=ExtResource("2_3lgnt")]
+position = Vector2(921.6, 523)

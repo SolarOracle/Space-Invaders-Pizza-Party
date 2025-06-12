@@ -12,6 +12,9 @@ func _process(delta):
 	
 	if (collision):
 		var collider = collision.get_collider()
+		if collider.collision_layer != 8:
+			print(str(collider.collision_layer))
+			collider.hit()
 		hit()
 
 func hit():
