@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://qkxa628xx7ej"]
+
+[ext_resource type="Texture2D" uid="uid://cmm4wcmir7l8w" path="res://Sprites/icon.svg" id="1_dobvu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wtbq1"]
+size = Vector2(128, 128)
+
+[node name="Invader" type="CharacterBody2D"]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 3.14159
+texture = ExtResource("1_dobvu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wtbq1")
+
+[node name="RaycastLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-2304, 0)
+collision_mask = 4
+
+[node name="RaycastRight" type="RayCast2D" parent="."]
+target_position = Vector2(2304, 0)
+collision_mask = 4
+
+[node name="RaycastDown" type="RayCast2D" parent="."]
+target_position = Vector2(0, 1296)
+collision_mask = 4
+
+[node name="RaycastUp" type="RayCast2D" parent="."]
+target_position = Vector2(0, -1296)
+collision_mask = 4
