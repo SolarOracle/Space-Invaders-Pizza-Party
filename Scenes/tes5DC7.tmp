@@ -92,3 +92,6 @@ position = Vector2(655, 80)
 
 [node name="Invader3" parent="." instance=ExtResource("3_x12s5")]
 position = Vector2(729, 80)
+
+[connection signal="body_entered" from="Bounds/BoundsLeft/EnemyDetection" to="Invader" method="_on_enemy_detection_body_entered"]
+[connection signal="body_entered" from="Bounds/BoundsRight/EnemyDetection" to="Invader" method="_on_enemy_detection_body_entered"]
