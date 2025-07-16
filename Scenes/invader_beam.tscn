@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cje518ysnj5q5"]
+
+[ext_resource type="Script" path="res://Scripts/beam.gd" id="1_ytn46"]
+[ext_resource type="Texture2D" uid="uid://4ntnkr65e3be" path="res://Sprites/Arrow2.png" id="2_8vy05"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxyx1"]
+size = Vector2(8, 32)
+
+[node name="InvaderBeam" type="CharacterBody2D"]
+scale = Vector2(1, 1.5)
+collision_layer = 2
+collision_mask = 30
+script = ExtResource("1_ytn46")
+speed = 400.0
+direction = -1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("2_8vy05")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fxyx1")

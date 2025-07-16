@@ -1,12 +1,12 @@
 extends CharacterBody2D
 
 @export var speed: float = 300
-
+@export var direction: int
 @onready var player = $"../PlayerTest"
 
 func _process(delta):
 	move_and_slide()
-	position -= transform.y * speed * delta
+	position -= transform.y * speed * delta * direction
 	
 	var collision = get_last_slide_collision()
 	
