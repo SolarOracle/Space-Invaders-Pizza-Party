@@ -8,8 +8,8 @@ size = Vector2(8, 32)
 
 [node name="InvaderBeam" type="CharacterBody2D"]
 scale = Vector2(1, 1.5)
-collision_layer = 2
-collision_mask = 30
+collision_layer = 64
+collision_mask = 27
 script = ExtResource("1_ytn46")
 speed = 400.0
 direction = -1

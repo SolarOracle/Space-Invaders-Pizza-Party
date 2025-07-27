@@ -30,3 +30,6 @@ func shoot():
 	scene.add_child(beam)
 	beam.global_position = weapon.global_position
 	can_shoot = false
+
+func hit():
+	queue_free()

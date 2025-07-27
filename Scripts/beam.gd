@@ -17,5 +17,6 @@ func _process(delta):
 		hit()
 
 func hit():
-	player.can_shoot = true
+	if direction == -1 and player != null:
+		player.can_shoot = true
 	queue_free()

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cki7ah6tp0bq4"]
+[gd_scene load_steps=7 format=3 uid="uid://cki7ah6tp0bq4"]
 
 [ext_resource type="PackedScene" uid="uid://cn7l07gfr6vmc" path="res://Scenes/player_test.tscn" id="1_m1o75"]
 [ext_resource type="PackedScene" uid="uid://bdwlh0kelrt81" path="res://Scenes/block.tscn" id="2_3lgnt"]
+[ext_resource type="Script" path="res://Scripts/InvaderManager.gd" id="3_ly7yb"]
 [ext_resource type="PackedScene" uid="uid://qkxa628xx7ej" path="res://Scenes/invader.tscn" id="3_x12s5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tagr6"]
@@ -84,6 +85,13 @@ collision_mask = 4
 position = Vector2(-5, 315.75)
 shape = SubResource("RectangleShape2D_qyak5")
 
+[node name="InvaderManager" type="Node" parent="."]
+script = ExtResource("3_ly7yb")
+
+[node name="Timer" type="Timer" parent="InvaderManager"]
+wait_time = 2.0
+autostart = true
+
 [node name="Invader" parent="." instance=ExtResource("3_x12s5")]
 position = Vector2(575, 80)
 
@@ -92,3 +100,5 @@ position = Vector2(655, 80)
 
 [node name="Invader3" parent="." instance=ExtResource("3_x12s5")]
 position = Vector2(729, 80)
+
+[connection signal="timeout" from="InvaderManager/Timer" to="InvaderManager" method="_on_timer_timeout"]
