@@ -15,6 +15,7 @@ var previous_direction : int
 var current_health : int = max_health
 var moving_down : bool = false
 var current_height : Vector2
+var dead : bool = false
 
 func _ready():
 	$"../Bounds/BoundsLeft/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
@@ -43,8 +44,9 @@ func hit():
 		destroy()
 
 func destroy():
-	invader_manager.invader_death()
 	invader_manager.shooters.erase(self)
+	dead = true
+	invader_manager.invader_death()
 	queue_free()
 
 func shoot():
@@ -58,5 +60,5 @@ func _on_enemy_detection_body_entered(body):
 	current_height = position
 
 func _on_check_if_shooter():
-	if rc_down.is_colliding() == false and invader_manager.shooters.find(self) == -1:
+	if rc_down.is_colliding() == false and invader_manager.shooters.find(self) == -1 and !dead:
 		invader_manager.shooters.append(self)
