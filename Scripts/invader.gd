@@ -8,7 +8,7 @@ extends CharacterBody2D
 @onready var weapon = $"Weapon"
 @onready var load_beam = preload("res://Scenes/invader_beam.tscn")
 @onready var beam = load_beam
-@onready var invader_manager
+@onready var invader_manager = $"../../InvaderManager"
 
 var direction : int = -1
 var previous_direction : int 
@@ -19,9 +19,8 @@ var dead : bool = false
 
 func _ready():
 	await Engine.get_main_loop().process_frame
-	invader_manager = get_node("../../InvaderManager")
-	get_node("../../Bounds/BoundsLeft/EnemyDetection").body_entered.connect(_on_enemy_detection_body_entered)
-	get_node("../../Bounds/BoundsRight/EnemyDetection").body_entered.connect(_on_enemy_detection_body_entered)
+	$"../../Bounds/BoundsLeft/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
+	$"../../Bounds/BoundsRight/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
 	invader_manager.check_if_shooter.connect(_on_check_if_shooter)
 	
 	if rc_down.is_colliding() == false:

@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var speed: float = 300
 @export var direction: int
-@onready var player = $"../../PlayerTest"
+@onready var player = get_node("/root/TestScene/PlayerTest")
 
 func _process(delta):
 	move_and_slide()
