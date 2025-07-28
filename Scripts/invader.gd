@@ -8,7 +8,7 @@ extends CharacterBody2D
 @onready var weapon = $"Weapon"
 @onready var load_beam = preload("res://Scenes/invader_beam.tscn")
 @onready var beam = load_beam
-@onready var invader_manager = $"../InvaderManager"
+@onready var invader_manager
 
 var direction : int = -1
 var previous_direction : int 
@@ -18,8 +18,10 @@ var current_height : Vector2
 var dead : bool = false
 
 func _ready():
-	$"../Bounds/BoundsLeft/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
-	$"../Bounds/BoundsRight/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
+	await Engine.get_main_loop().process_frame
+	invader_manager = get_node("../../InvaderManager")
+	get_node("../../Bounds/BoundsLeft/EnemyDetection").body_entered.connect(_on_enemy_detection_body_entered)
+	get_node("../../Bounds/BoundsRight/EnemyDetection").body_entered.connect(_on_enemy_detection_body_entered)
 	invader_manager.check_if_shooter.connect(_on_check_if_shooter)
 	
 	if rc_down.is_colliding() == false:
@@ -31,8 +33,8 @@ func _physics_process(delta):
 		position += transform.x * direction * delta * move_speed
 	else:
 		position += transform.y * delta * move_speed
-		if position.distance_to(current_height) >= 40:
-			position.y -= position.distance_to(current_height) - 40
+		if position.distance_to(current_height) >= 30:
+			position.y -= position.distance_to(current_height) - 30
 			direction = previous_direction * -1
 			moving_down = false
 
@@ -53,6 +55,9 @@ func shoot():
 	beam = load_beam.instantiate()
 	scene.add_child(beam)
 	beam.global_position = weapon.global_position
+
+func get_size():
+	return $CollisionShape2D.shape.get_rect().size
 
 func _on_enemy_detection_body_entered(body):
 	previous_direction = direction

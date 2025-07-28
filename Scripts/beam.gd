@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var speed: float = 300
 @export var direction: int
-@onready var player = $"../PlayerTest"
+@onready var player = $"../../PlayerTest"
 
 func _process(delta):
 	move_and_slide()
@@ -17,6 +17,6 @@ func _process(delta):
 		hit()
 
 func hit():
-	if direction == -1 and player != null:
+	if direction == 1 and player != null:
 		player.can_shoot = true
 	queue_free()

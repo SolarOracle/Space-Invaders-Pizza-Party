@@ -10,5 +10,6 @@ func select_shooter():
 	var shooter = shooters.pick_random()
 	shooter.shoot()
 
-func _on_timer_timeout():
-	select_shooter()
+func _on_shot_timer_timeout():
+	if shooters.size() > 0:
+		select_shooter()
