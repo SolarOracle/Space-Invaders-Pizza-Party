@@ -18,9 +18,9 @@ var current_height : Vector2
 var dead : bool = false
 
 func _ready():
-	await Engine.get_main_loop().process_frame
-	$"../../Bounds/BoundsLeft/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
-	$"../../Bounds/BoundsRight/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
+	for i in 5:
+		await Engine.get_main_loop().process_frame
+	connect_with_bounds()
 	invader_manager.check_if_shooter.connect(_on_check_if_shooter)
 	
 	if rc_down.is_colliding() == false:
@@ -57,6 +57,11 @@ func shoot():
 
 func get_size():
 	return $CollisionShape2D.shape.get_rect().size
+
+func connect_with_bounds():
+	await Engine.get_main_loop().process_frame
+	$"../../Bounds/BoundsLeft/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
+	$"../../Bounds/BoundsRight/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
 
 func _on_enemy_detection_body_entered(body):
 	previous_direction = direction

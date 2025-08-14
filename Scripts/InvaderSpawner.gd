@@ -9,11 +9,17 @@ const rows = 5
 @export var margin: Vector2 = Vector2(1,1)
 @export var spawn_start: Marker2D
 
+@onready var bounds_left = get_node("/root/TestScene/Bounds/BoundsLeft")
+@onready var bounds_right = get_node("/root/TestScene/Bounds/BoundsRight")
+
 var invader_count: int = 0
 
 func _ready():
 	spawn()
-
+	await Engine.get_main_loop().process_frame
+	bounds_left.process_mode = Node.PROCESS_MODE_ALWAYS
+	bounds_right.process_mode = Node.PROCESS_MODE_ALWAYS
+	
 func spawn():
 	var test_invader = invader.instantiate()
 	add_child(test_invader)

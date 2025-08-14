@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cki7ah6tp0bq4"]
+[gd_scene load_steps=9 format=3 uid="uid://cki7ah6tp0bq4"]
 
 [ext_resource type="PackedScene" uid="uid://cn7l07gfr6vmc" path="res://Scenes/player_test.tscn" id="1_m1o75"]
 [ext_resource type="PackedScene" uid="uid://bdwlh0kelrt81" path="res://Scenes/block.tscn" id="2_3lgnt"]
 [ext_resource type="Script" path="res://Scripts/InvaderManager.gd" id="3_ly7yb"]
+[ext_resource type="Script" path="res://Scripts/EnemyDetection.gd" id="3_mlw6t"]
 [ext_resource type="PackedScene" uid="uid://qkxa628xx7ej" path="res://Scenes/invader.tscn" id="3_x12s5"]
 [ext_resource type="Script" path="res://Scripts/InvaderSpawner.gd" id="4_626jd"]
 
@@ -44,7 +45,7 @@ position = Vector2(573, -20)
 shape = SubResource("RectangleShape2D_tagr6")
 
 [node name="BoundsLeft" type="StaticBody2D" parent="Bounds"]
-process_mode = 4
+visible = false
 collision_layer = 8
 collision_mask = 5
 
@@ -55,10 +56,16 @@ shape = SubResource("RectangleShape2D_qyak5")
 [node name="EnemyDetection" type="Area2D" parent="Bounds/BoundsLeft"]
 collision_layer = 8
 collision_mask = 4
+script = ExtResource("3_mlw6t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/BoundsLeft/EnemyDetection"]
 position = Vector2(1, 315.75)
 shape = SubResource("RectangleShape2D_qyak5")
+
+[node name="StartTimer" type="Timer" parent="Bounds/BoundsLeft/EnemyDetection"]
+wait_time = 0.2
+one_shot = true
+autostart = true
 
 [node name="BoundsDown" type="StaticBody2D" parent="Bounds"]
 position = Vector2(0, 696)
@@ -71,7 +78,7 @@ position = Vector2(573, -20)
 shape = SubResource("RectangleShape2D_tagr6")
 
 [node name="BoundsRight" type="StaticBody2D" parent="Bounds"]
-process_mode = 4
+visible = false
 position = Vector2(1152, 0)
 collision_layer = 8
 collision_mask = 5
@@ -83,10 +90,16 @@ shape = SubResource("RectangleShape2D_qyak5")
 [node name="EnemyDetection" type="Area2D" parent="Bounds/BoundsRight"]
 collision_layer = 8
 collision_mask = 4
+script = ExtResource("3_mlw6t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bounds/BoundsRight/EnemyDetection"]
 position = Vector2(-5, 315.75)
 shape = SubResource("RectangleShape2D_qyak5")
+
+[node name="StartTimer" type="Timer" parent="Bounds/BoundsRight/EnemyDetection"]
+wait_time = 0.2
+one_shot = true
+autostart = true
 
 [node name="InvaderManager" type="Node" parent="."]
 script = ExtResource("3_ly7yb")
@@ -103,4 +116,6 @@ spawn_start = NodePath("SpawnLocation")
 [node name="SpawnLocation" type="Marker2D" parent="InvaderSpawner"]
 position = Vector2(250, 50)
 
+[connection signal="timeout" from="Bounds/BoundsLeft/EnemyDetection/StartTimer" to="Bounds/BoundsLeft/EnemyDetection" method="_on_start_timer_timeout"]
+[connection signal="timeout" from="Bounds/BoundsRight/EnemyDetection/StartTimer" to="Bounds/BoundsRight/EnemyDetection" method="_on_start_timer_timeout"]
 [connection signal="timeout" from="InvaderManager/ShotTimer" to="InvaderManager" method="_on_shot_timer_timeout"]
