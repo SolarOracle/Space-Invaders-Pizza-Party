@@ -18,8 +18,7 @@ var current_height : Vector2
 var dead : bool = false
 
 func _ready():
-	for i in 5:
-		await Engine.get_main_loop().process_frame
+	await Engine.get_main_loop().process_frame
 	connect_with_bounds()
 	invader_manager.check_if_shooter.connect(_on_check_if_shooter)
 	
