@@ -1,9 +1,11 @@
 extends Node
 
+var invader_count: int = 0
 var shooters: Array = []
 signal check_if_shooter
 
 func invader_death():
+	invader_count -= 1
 	check_if_shooter.emit()
 
 func select_shooter():
