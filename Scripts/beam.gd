@@ -10,7 +10,7 @@ func _process(delta):
 	
 	var collision = get_last_slide_collision()
 	
-	if (collision):
+	if collision:
 		var collider = collision.get_collider()
 		if collider.collision_layer != 8:
 			collider.hit()

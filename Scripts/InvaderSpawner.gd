@@ -39,4 +39,3 @@ func spawn():
 			var y = spawn_position_y + i * (margin.y + new_invader.get_size().y) * 0.4
 			new_invader.set_position(Vector2(x, y))
 			invader_manager.invader_count += 1
-			print(invader_manager.invader_count)
