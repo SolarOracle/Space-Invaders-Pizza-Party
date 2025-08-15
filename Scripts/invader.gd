@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var move_speed: float = 200
+@export var move_speed: float = 150
 @export var max_health: int = 1
 
 @onready var scene = $".."
@@ -21,6 +21,7 @@ func _ready():
 	await Engine.get_main_loop().process_frame
 	connect_with_bounds()
 	invader_manager.check_if_shooter.connect(_on_check_if_shooter)
+	invader_manager.update_speed.connect(_on_update_speed)
 
 func _physics_process(delta):
 	move_and_slide()
@@ -67,3 +68,6 @@ func _on_enemy_detection_body_entered(body):
 func _on_check_if_shooter():
 	if !rc_down.is_colliding() and invader_manager.shooters.find(self) == -1 and !dead:
 		invader_manager.shooters.append(self)
+
+func _on_update_speed(speed):
+	move_speed = speed
