@@ -32,4 +32,5 @@ func shoot():
 	can_shoot = false
 
 func hit():
+	pass
 	queue_free()

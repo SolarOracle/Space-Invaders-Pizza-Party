@@ -51,6 +51,9 @@ func shoot():
 	beam = load_beam.instantiate()
 	scene.add_child(beam)
 	beam.global_position = weapon.global_position
+	print(invader_manager.invader_count)
+	print(move_speed)
+	print(invader_manager.shot_timer.wait_time)
 
 func get_size():
 	return $CollisionShape2D.shape.get_rect().size
