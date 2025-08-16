@@ -10,13 +10,14 @@ signal update_speed
 signal clear_shots
 
 func _ready():
-	for i in 4:
+	for i in 2:
 		await Engine.get_main_loop().process_frame
 	check_if_shooter.emit()
 
 func invader_death():
 	await Engine.get_main_loop().process_frame
 	invader_count -= 1
+	print(total_score)
 	check_if_shooter.emit()
 	if invader_count <= 40 and shot_timer.wait_time > 1.3:
 		update_speed.emit(200)
@@ -36,13 +37,16 @@ func invader_death():
 	elif invader_count <= 1 and shot_timer.wait_time > 0.3:
 		update_speed.emit(500)
 		shot_timer.wait_time = 0.3
-	else:
+	elif invader_count <= 0:
 		shot_timer.paused = true
 		clear_shots.emit()
 
 func select_shooter():
 	var shooter = shooters.pick_random()
 	shooter.shoot()
+
+func update_score(score):
+	total_score += score
 
 func _on_shot_timer_timeout():
 	if shooters.size() > 0:

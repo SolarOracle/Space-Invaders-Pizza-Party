@@ -11,7 +11,9 @@ extends CharacterBody2D
 @onready var invader_manager = $"../../InvaderManager"
 
 var direction: int = -1
+var level: int
 var previous_direction: int 
+var score: int
 var current_health: int = max_health
 var moving_down: bool = false
 var current_height: Vector2
@@ -42,8 +44,10 @@ func hit():
 		destroy()
 
 func destroy():
+	get_score()
 	invader_manager.shooters.erase(self)
 	dead = true
+	invader_manager.update_score(score)
 	invader_manager.invader_death()
 	queue_free()
 
@@ -51,9 +55,6 @@ func shoot():
 	beam = load_beam.instantiate()
 	scene.add_child(beam)
 	beam.global_position = weapon.global_position
-	print(invader_manager.invader_count)
-	print(move_speed)
-	print(invader_manager.shot_timer.wait_time)
 
 func get_size():
 	return $CollisionShape2D.shape.get_rect().size
@@ -62,6 +63,9 @@ func connect_with_bounds():
 	await Engine.get_main_loop().process_frame
 	$"../../Bounds/BoundsLeft/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
 	$"../../Bounds/BoundsRight/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
+
+func get_score():
+	score = level * 10
 
 func _on_enemy_detection_body_entered(body):
 	previous_direction = direction
