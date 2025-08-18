@@ -9,6 +9,7 @@ extends CharacterBody2D
 
 var can_shoot: bool = true
 var x_input : int = 0
+signal death
 
 func _process(delta):
 	x_input = Input.get_axis("move_left", "move_right")
@@ -32,4 +33,5 @@ func shoot():
 	can_shoot = false
 
 func hit():
+	death.emit()
 	queue_free()

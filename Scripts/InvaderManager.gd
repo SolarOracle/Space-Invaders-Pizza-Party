@@ -1,6 +1,7 @@
 extends Node
 
 @onready var shot_timer = $ShotTimer
+@onready var player = get_node("/root/TestScene/PlayerTest")
 
 var total_score: int
 var invader_count: int
@@ -13,6 +14,7 @@ func _ready():
 	for i in 2:
 		await Engine.get_main_loop().process_frame
 	check_if_shooter.emit()
+	player.death.connect(_on_player_death)
 
 func invader_death():
 	await Engine.get_main_loop().process_frame
@@ -51,3 +53,6 @@ func update_score(score):
 func _on_shot_timer_timeout():
 	if shooters.size() > 0:
 		select_shooter()
+
+func _on_player_death():
+	shot_timer.paused = true
