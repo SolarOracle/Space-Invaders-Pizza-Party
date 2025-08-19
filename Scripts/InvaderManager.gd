@@ -1,9 +1,8 @@
 extends Node
 
 @onready var shot_timer = $ShotTimer
-@onready var player = get_node("/root/TestScene/PlayerTest")
+@onready var game_manager = $"../GameManager"
 
-var total_score: int
 var invader_count: int
 var shooters: Array = []
 signal check_if_shooter
@@ -14,12 +13,11 @@ func _ready():
 	for i in 2:
 		await Engine.get_main_loop().process_frame
 	check_if_shooter.emit()
-	player.death.connect(_on_player_death)
 
 func invader_death():
 	await Engine.get_main_loop().process_frame
 	invader_count -= 1
-	print(total_score)
+	print(game_manager.total_score)
 	check_if_shooter.emit()
 	if invader_count <= 40 and shot_timer.wait_time > 1.3:
 		update_speed.emit(200)
@@ -30,15 +28,15 @@ func invader_death():
 	elif invader_count <= 20 and shot_timer.wait_time > 0.8:
 		update_speed.emit(300)
 		shot_timer.wait_time = 0.8
-	elif invader_count <= 10 and shot_timer.wait_time > 0.5:
+	elif invader_count <= 10 and shot_timer.wait_time > 0.7:
 		update_speed.emit(350)
-		shot_timer.wait_time = 0.5
-	elif invader_count <= 5 and shot_timer.wait_time > 0.4:
+		shot_timer.wait_time = 0.7
+	elif invader_count <= 5 and shot_timer.wait_time > 0.65:
 		update_speed.emit(400)
-		shot_timer.wait_time = 0.4
-	elif invader_count <= 1 and shot_timer.wait_time > 0.3:
+		shot_timer.wait_time = 0.65
+	elif invader_count <= 1 and shot_timer.wait_time > 0.6:
 		update_speed.emit(500)
-		shot_timer.wait_time = 0.3
+		shot_timer.wait_time = 0.6
 	elif invader_count <= 0:
 		shot_timer.paused = true
 		clear_shots.emit()
@@ -47,12 +45,6 @@ func select_shooter():
 	var shooter = shooters.pick_random()
 	shooter.shoot()
 
-func update_score(score):
-	total_score += score
-
 func _on_shot_timer_timeout():
 	if shooters.size() > 0:
 		select_shooter()
-
-func _on_player_death():
-	shot_timer.paused = true

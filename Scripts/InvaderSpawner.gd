@@ -20,7 +20,7 @@ func _ready():
 	await Engine.get_main_loop().process_frame
 	bounds_left.process_mode = Node.PROCESS_MODE_ALWAYS
 	bounds_right.process_mode = Node.PROCESS_MODE_ALWAYS
-	
+
 func spawn():
 	var test_invader = invader.instantiate()
 	add_child(test_invader)

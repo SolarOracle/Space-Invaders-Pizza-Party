@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cki7ah6tp0bq4"]
+[gd_scene load_steps=9 format=3 uid="uid://cki7ah6tp0bq4"]
 
 [ext_resource type="PackedScene" uid="uid://cn7l07gfr6vmc" path="res://Scenes/player_test.tscn" id="1_m1o75"]
 [ext_resource type="PackedScene" uid="uid://bdwlh0kelrt81" path="res://Scenes/block.tscn" id="2_3lgnt"]
 [ext_resource type="Script" path="res://Scripts/InvaderManager.gd" id="3_ly7yb"]
 [ext_resource type="PackedScene" uid="uid://qkxa628xx7ej" path="res://Scenes/invader.tscn" id="3_x12s5"]
 [ext_resource type="Script" path="res://Scripts/InvaderSpawner.gd" id="4_626jd"]
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="6_dsqw2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tagr6"]
 size = Vector2(1166, 60)
@@ -102,5 +103,8 @@ spawn_start = NodePath("SpawnLocation")
 
 [node name="SpawnLocation" type="Marker2D" parent="InvaderSpawner"]
 position = Vector2(250, 50)
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("6_dsqw2")
 
 [connection signal="timeout" from="InvaderManager/ShotTimer" to="InvaderManager" method="_on_shot_timer_timeout"]

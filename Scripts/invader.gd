@@ -9,6 +9,7 @@ extends CharacterBody2D
 @onready var load_beam = preload("res://Scenes/invader_beam.tscn")
 @onready var beam = load_beam
 @onready var invader_manager = $"../../InvaderManager"
+@onready var game_manager = $"../../GameManager"
 
 var direction: int = -1
 var level: int
@@ -35,6 +36,7 @@ func _physics_process(delta):
 			position.y -= position.distance_to(current_height) - 30
 			direction = previous_direction * -1
 			moving_down = false
+			check_position()
 
 func hit():
 	current_health = current_health - 1
@@ -47,7 +49,7 @@ func destroy():
 	get_score()
 	invader_manager.shooters.erase(self)
 	dead = true
-	invader_manager.update_score(score)
+	game_manager.update_score(score)
 	invader_manager.invader_death()
 	queue_free()
 
@@ -63,6 +65,10 @@ func connect_with_bounds():
 	await Engine.get_main_loop().process_frame
 	$"../../Bounds/BoundsLeft/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
 	$"../../Bounds/BoundsRight/EnemyDetection".body_entered.connect(_on_enemy_detection_body_entered)
+
+func check_position():
+	if position.y >= 475:
+		game_manager.lose_game()
 
 func get_score():
 	score = level * 10
