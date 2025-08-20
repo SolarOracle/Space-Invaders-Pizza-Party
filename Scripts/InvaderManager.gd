@@ -17,7 +17,6 @@ func _ready():
 func invader_death():
 	await Engine.get_main_loop().process_frame
 	invader_count -= 1
-	print(game_manager.total_score)
 	check_if_shooter.emit()
 	if invader_count <= 40 and shot_timer.wait_time > 1.3:
 		update_speed.emit(200)

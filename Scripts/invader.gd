@@ -19,12 +19,15 @@ var current_health: int = max_health
 var moving_down: bool = false
 var current_height: Vector2
 var dead: bool = false
+var initial_position: Vector2
 
 func _ready():
 	await Engine.get_main_loop().process_frame
 	connect_with_bounds()
+	initial_position = position
 	invader_manager.check_if_shooter.connect(_on_check_if_shooter)
 	invader_manager.update_speed.connect(_on_update_speed)
+	game_manager.reset_position.connect(_on_reset_position)
 
 func _physics_process(delta):
 	move_and_slide()
@@ -84,3 +87,7 @@ func _on_check_if_shooter():
 
 func _on_update_speed(speed):
 	move_speed = speed
+
+func _on_reset_position():
+	direction = -1
+	position = initial_position

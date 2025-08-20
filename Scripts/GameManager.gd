@@ -3,13 +3,18 @@ extends Node
 @export var lives: int
 
 @onready var player = get_node("/root/TestScene/PlayerTest")
-@onready var invader_manager = $"../InvaderManager"
+@onready var load_player = preload("res://Scenes/player_test.tscn")
+@onready var invader_manager = %InvaderManager
 @onready var points_label = %PointsLabel
 @onready var lives_label = %LivesNumberLabel
+@onready var scene = $".."
 
+var starting_position: Vector2
 var total_score: int
+signal reset_position
 
 func _ready():
+	starting_position = player.position
 	player.death.connect(_on_player_death)
 	lives_label.text = ("%s" % lives)
 
@@ -18,6 +23,17 @@ func lose_game():
 
 func win_game():
 	pass
+
+func lose_life():
+	await get_tree().create_timer(1.0).timeout
+	player = load_player.instantiate()
+	scene.add_child(player)
+	player.position = starting_position
+	player.death.connect(_on_player_death)
+	reset_position.emit()
+	lives_label.text = ("%s" % lives)
+	invader_manager.shot_timer.start()
+	invader_manager.shot_timer.paused = false
 
 func update_score(score):
 	total_score += score
@@ -33,3 +49,5 @@ func _on_player_death():
 	lives -= 1
 	if lives == 0:
 		lose_game()
+	else:
+		lose_life()
