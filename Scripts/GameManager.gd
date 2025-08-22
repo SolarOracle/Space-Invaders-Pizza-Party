@@ -9,6 +9,8 @@ extends Node
 @onready var lives_label = %LivesNumberLabel
 @onready var ready_label = %ReadyLabel
 @onready var scene = $".."
+@onready var bounds_left = get_node("/root/TestScene/Bounds/BoundsLeft")
+@onready var bounds_right = get_node("/root/TestScene/Bounds/BoundsRight")
 
 var starting_position: Vector2
 var total_score: int
@@ -16,18 +18,21 @@ signal reset_position
 signal activate
 
 func _ready():
+	lives_label.text = ("%s" % lives)
 	starting_position = player.position
 	player.death.connect(_on_player_death)
-	lives_label.text = ("%s" % lives)
 	start_delay()
 
 func start_delay():
+	ready_label.show()
 	await get_tree().create_timer(1.5).timeout
 	player.active = true
 	activate.emit()
 	ready_label.hide()
 	invader_manager.shot_timer.start()
 	invader_manager.shot_timer.paused = false
+	bounds_left.process_mode = Node.PROCESS_MODE_ALWAYS
+	bounds_right.process_mode = Node.PROCESS_MODE_ALWAYS
 
 func lose_game():
 	lives_label.text = ("%s" % lives)
@@ -45,7 +50,6 @@ func lose_life():
 	activate.emit()
 	player.active = false
 	lives_label.text = ("%s" % lives)
-	ready_label.show()
 	start_delay()
 
 func update_score(score):

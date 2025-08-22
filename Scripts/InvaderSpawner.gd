@@ -17,9 +17,6 @@ var invader_count: int = 0
 
 func _ready():
 	spawn()
-	await Engine.get_main_loop().process_frame
-	bounds_left.process_mode = Node.PROCESS_MODE_ALWAYS
-	bounds_right.process_mode = Node.PROCESS_MODE_ALWAYS
 
 func spawn():
 	var test_invader = invader.instantiate()
@@ -27,7 +24,6 @@ func spawn():
 	var invader_size = test_invader.get_size()
 	test_invader.queue_free()
 	
-	var row_width = invader_size.x * columns + margin.x * (columns - 1)
 	var spawn_position_x = spawn_start.position.x
 	var spawn_position_y = spawn_start.position.y
 	
