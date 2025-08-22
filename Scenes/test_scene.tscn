@@ -108,7 +108,6 @@ position = Vector2(250, 50)
 [node name="GameManager" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("6_dsqw2")
-lives = 3
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -129,6 +128,21 @@ text = "READY?"
 horizontal_alignment = 1
 
 [node name="WinLabel" type="Label" parent="UI/MessageHBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("7_v606x")
+theme_override_font_sizes/font_size = 124
+text = "YOU WIN!
+TOTAL SCORE - 0000
+
+NICE JOB!
+PRESS ESC TO QUIT
+"
+horizontal_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="UI/MessageHBox"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -194,3 +208,4 @@ unique_name_in_owner = true
 visible = false
 
 [connection signal="timeout" from="InvaderManager/ShotTimer" to="InvaderManager" method="_on_shot_timer_timeout"]
+[connection signal="position_invader_marker" from="GameManager" to="InvaderSpawner" method="_on_game_manager_position_invader_marker"]

@@ -14,6 +14,7 @@ const rows = 5
 var invader_count: int = 0
 
 func _ready():
+	await Engine.get_main_loop().process_frame
 	spawn()
 
 func spawn():
@@ -31,3 +32,10 @@ func spawn():
 			new_invader.set_position(Vector2(x, y))
 			invader_manager.invader_count += 1
 			new_invader.level = 3.0 - (ceil(float(i / 2.0)))
+
+
+func _on_game_manager_position_invader_marker(level):
+	if level == 1:
+		spawn_start.position.y = 50
+	elif level == 2:
+		spawn_start.position.y = 110

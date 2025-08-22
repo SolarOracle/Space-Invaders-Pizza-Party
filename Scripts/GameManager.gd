@@ -1,7 +1,5 @@
 extends Node
 
-@export var lives: int
-
 @onready var player = get_node("/root/TestScene/PlayerTest")
 @onready var load_player = preload("res://Scenes/player_test.tscn")
 @onready var invader_manager = %InvaderManager
@@ -9,20 +7,27 @@ extends Node
 @onready var lives_label = %LivesNumberLabel
 @onready var ready_label = %ReadyLabel
 @onready var win_label = %WinLabel
+@onready var level_label = %LevelLabel
 @onready var pause_menu = %PauseMenu
 @onready var scene = $".."
 @onready var bounds_left = get_node("/root/TestScene/Bounds/BoundsLeft")
 @onready var bounds_right = get_node("/root/TestScene/Bounds/BoundsRight")
 
 var starting_position: Vector2
-var total_score: int
 signal reset_position
 signal activate
+signal position_invader_marker
 
 func _ready():
-	lives_label.text = ("%s" % lives)
+	if level_definitions.game_level <= 0:
+		level_definitions.game_level = 1
+	if level_definitions.lives <= 0:
+		level_definitions.lives = 3
+	update_score(0)
+	lives_label.text = ("%s" % level_definitions.lives)
 	starting_position = player.position
 	player.death.connect(_on_player_death)
+	position_invader_marker.emit(level_definitions.game_level)
 	start_delay()
 
 func _input(event):
@@ -31,6 +36,11 @@ func _input(event):
 			pause()
 		elif pause_menu.visible == false and win_label.visible:
 			get_tree().quit()
+	
+	if Input.is_action_just_pressed("shoot"):
+		if pause_menu.visible == false and level_label.visible:
+			level_definitions.game_level += 1
+			get_tree().reload_current_scene()
 
 func start_delay():
 	ready_label.show()
@@ -51,7 +61,16 @@ func pause():
 func lose_game():
 	await get_tree().create_timer(0.5).timeout
 	activate.emit()
-	lives_label.text = ("%s" % lives)
+	lives_label.text = ("%s" % level_definitions.lives)
+
+func win_level():
+	await get_tree().create_timer(0.5).timeout
+	player.active = false
+	level_label.text = ("""LEVEL WON!
+	CURRENT SCORE - %s
+	
+	PRESS SPACE TO PROCEED""" % level_definitions.total_score)
+	level_label.show()
 
 func win_game():
 	await get_tree().create_timer(0.5).timeout
@@ -60,7 +79,7 @@ func win_game():
 	TOTAL SCORE - %s
 	
 	NICE JOB!
-	PRESS ESC TO QUIT""" % total_score) 
+	PRESS ESC TO QUIT""" % level_definitions.total_score)
 	win_label.show()
 
 func lose_life():
@@ -72,22 +91,22 @@ func lose_life():
 	reset_position.emit()
 	activate.emit()
 	player.active = false
-	lives_label.text = ("%s" % lives)
+	lives_label.text = ("%s" % level_definitions.lives)
 	start_delay()
 
 func update_score(score):
-	total_score += score
-	if total_score < 100:
-		points_label.text = ("00" + "%s" % total_score)
-	elif total_score < 1000:
-		points_label.text = ("0" + "%s" % total_score)
+	level_definitions.total_score += score
+	if level_definitions.total_score < 100:
+		points_label.text = ("00" + "%s" % level_definitions.total_score)
+	elif level_definitions.total_score < 1000:
+		points_label.text = ("0" + "%s" % level_definitions.total_score)
 	else:
-		points_label.text = ("%s" % total_score)
+		points_label.text = ("%s" % level_definitions.total_score)
 
 func _on_player_death():
 	invader_manager.shot_timer.paused = true
-	lives -= 1
-	if lives == 0:
+	level_definitions.lives -= 1
+	if level_definitions.lives == 0:
 		lose_game()
 	else:
 		lose_life()

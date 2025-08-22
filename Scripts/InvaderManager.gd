@@ -39,7 +39,10 @@ func invader_death():
 	elif invader_count <= 0:
 		shot_timer.paused = true
 		clear_shots.emit()
-		game_manager.win_game()
+		if level_definitions.game_level == 2:
+			game_manager.win_game()
+		else:
+			game_manager.win_level()
 
 func select_shooter():
 	var shooter = shooters.pick_random()
