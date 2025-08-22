@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var load_beam = preload("res://Scenes/beam.tscn")
 @onready var beam = load_beam
 
+var active: bool = false
 var can_shoot: bool = true
 var x_input : int = 0
 signal death
@@ -15,11 +16,12 @@ func _process(delta):
 	x_input = Input.get_axis("move_left", "move_right")
 
 	if Input.is_action_just_pressed("shoot"):
-		if can_shoot:
+		if can_shoot and active:
 			shoot()
 
 func _physics_process(delta):
-	movement(x_input, delta)
+	if active:
+		movement(x_input, delta)
 
 func movement(_x_input : int, delta):
 	var _velocity : Vector2 = Vector2(_x_input * move_spd * delta, 0)

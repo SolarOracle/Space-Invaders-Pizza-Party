@@ -11,6 +11,7 @@ extends CharacterBody2D
 @onready var invader_manager = $"../../InvaderManager"
 @onready var game_manager = $"../../GameManager"
 
+var active: bool = false
 var direction: int = -1
 var level: int
 var previous_direction: int 
@@ -28,18 +29,20 @@ func _ready():
 	invader_manager.check_if_shooter.connect(_on_check_if_shooter)
 	invader_manager.update_speed.connect(_on_update_speed)
 	game_manager.reset_position.connect(_on_reset_position)
+	game_manager.activate.connect(_on_activate)
 
 func _physics_process(delta):
-	move_and_slide()
-	if moving_down == false:
-		position += transform.x * direction * delta * move_speed
-	else:
-		position += transform.y * delta * move_speed
-		if position.distance_to(current_height) >= 30:
-			position.y -= position.distance_to(current_height) - 30
-			direction = previous_direction * -1
-			moving_down = false
-			check_position()
+	if active:
+		move_and_slide()
+		if moving_down == false:
+			position += transform.x * direction * delta * move_speed
+		else:
+			position += transform.y * delta * move_speed
+			if position.distance_to(current_height) >= 30:
+				position.y -= position.distance_to(current_height) - 30
+				direction = previous_direction * -1
+				moving_down = false
+				check_position()
 
 func hit():
 	current_health = current_health - 1
@@ -91,3 +94,6 @@ func _on_update_speed(speed):
 func _on_reset_position():
 	direction = -1
 	position = initial_position
+
+func _on_activate():
+	active = !active

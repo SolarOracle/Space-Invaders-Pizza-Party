@@ -38,14 +38,7 @@ func spawn():
 			var x = spawn_position_x + j * (margin.x + new_invader.get_size().x) * 0.45
 			var y = spawn_position_y + i * (margin.y + new_invader.get_size().y) * 0.4
 			
-			var level_grabber = {
-			0: 3,
-			1: 2,
-			2: 2,
-			3: 1,
-			4: 1}
-			#Determines what enemy level should be based on the row (i).
-			
+			i = float(i)
 			new_invader.set_position(Vector2(x, y))
 			invader_manager.invader_count += 1
-			new_invader.level = level_grabber[i]
+			new_invader.level = 3.0 - (ceil(float(i / 2.0)))

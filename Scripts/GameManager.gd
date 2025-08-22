@@ -7,19 +7,30 @@ extends Node
 @onready var invader_manager = %InvaderManager
 @onready var points_label = %PointsLabel
 @onready var lives_label = %LivesNumberLabel
+@onready var ready_label = %ReadyLabel
 @onready var scene = $".."
 
 var starting_position: Vector2
 var total_score: int
 signal reset_position
+signal activate
 
 func _ready():
 	starting_position = player.position
 	player.death.connect(_on_player_death)
 	lives_label.text = ("%s" % lives)
+	start_delay()
+
+func start_delay():
+	await get_tree().create_timer(1.5).timeout
+	player.active = true
+	activate.emit()
+	ready_label.hide()
+	invader_manager.shot_timer.start()
+	invader_manager.shot_timer.paused = false
 
 func lose_game():
-	pass
+	lives_label.text = ("%s" % lives)
 
 func win_game():
 	pass
@@ -31,9 +42,11 @@ func lose_life():
 	player.position = starting_position
 	player.death.connect(_on_player_death)
 	reset_position.emit()
+	activate.emit()
+	player.active = false
 	lives_label.text = ("%s" % lives)
-	invader_manager.shot_timer.start()
-	invader_manager.shot_timer.paused = false
+	ready_label.show()
+	start_delay()
 
 func update_score(score):
 	total_score += score

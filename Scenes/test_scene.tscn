@@ -96,7 +96,6 @@ script = ExtResource("3_ly7yb")
 
 [node name="ShotTimer" type="Timer" parent="InvaderManager"]
 wait_time = 1.5
-autostart = true
 
 [node name="InvaderSpawner" type="Node" parent="." node_paths=PackedStringArray("spawn_start")]
 script = ExtResource("4_626jd")
@@ -144,10 +143,10 @@ theme_override_fonts/font = ExtResource("7_v606x")
 theme_override_font_sizes/font_size = 42
 text = "0000"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer"]
+[node name="LivesHBox" type="HBoxContainer" parent="UI/MarginContainer"]
 layout_mode = 2
 
-[node name="LivesLabel" type="Label" parent="UI/MarginContainer/HBoxContainer"]
+[node name="LivesLabel" type="Label" parent="UI/MarginContainer/LivesHBox"]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_colors/font_color = Color(1, 0, 0, 1)
@@ -155,12 +154,24 @@ theme_override_fonts/font = ExtResource("7_v606x")
 theme_override_font_sizes/font_size = 42
 text = "Lives "
 
-[node name="LivesNumberLabel" type="Label" parent="UI/MarginContainer/HBoxContainer"]
+[node name="LivesNumberLabel" type="Label" parent="UI/MarginContainer/LivesHBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("7_v606x")
 theme_override_font_sizes/font_size = 42
 text = "0"
+
+[node name="ReadyHBox" type="HBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+
+[node name="ReadyLabel" type="Label" parent="UI/MarginContainer/ReadyHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("7_v606x")
+theme_override_font_sizes/font_size = 168
+text = "READY?"
+horizontal_alignment = 1
 
 [connection signal="timeout" from="InvaderManager/ShotTimer" to="InvaderManager" method="_on_shot_timer_timeout"]
