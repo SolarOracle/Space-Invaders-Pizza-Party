@@ -9,6 +9,7 @@ extends Node
 @onready var lives_label = %LivesNumberLabel
 @onready var ready_label = %ReadyLabel
 @onready var win_label = %WinLabel
+@onready var pause_menu = %PauseMenu
 @onready var scene = $".."
 @onready var bounds_left = get_node("/root/TestScene/Bounds/BoundsLeft")
 @onready var bounds_right = get_node("/root/TestScene/Bounds/BoundsRight")
@@ -24,6 +25,13 @@ func _ready():
 	player.death.connect(_on_player_death)
 	start_delay()
 
+func _input(event):
+	if Input.is_action_just_pressed("pause"):
+		if player != null and player.active and invader_manager.invader_count > 0:
+			pause()
+		elif pause_menu.visible == false and win_label.visible:
+			get_tree().quit()
+
 func start_delay():
 	ready_label.show()
 	invader_manager.clear_shots.emit()
@@ -36,7 +44,13 @@ func start_delay():
 	bounds_left.process_mode = Node.PROCESS_MODE_ALWAYS
 	bounds_right.process_mode = Node.PROCESS_MODE_ALWAYS
 
+func pause():
+	pause_menu.visible = !pause_menu.visible
+	get_tree().paused = !get_tree().paused
+
 func lose_game():
+	await get_tree().create_timer(0.5).timeout
+	activate.emit()
 	lives_label.text = ("%s" % lives)
 
 func win_game():
