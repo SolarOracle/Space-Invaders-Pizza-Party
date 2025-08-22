@@ -110,61 +110,13 @@ lives = 3
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+[node name="MessageHBox" type="HBoxContainer" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 1142.0
+offset_bottom = 638.0
 
-[node name="ScoreHBox" type="HBoxContainer" parent="UI/MarginContainer"]
-layout_mode = 2
-
-[node name="ScoreLabel" type="Label" parent="UI/MarginContainer/ScoreHBox"]
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 0
-size_flags_stretch_ratio = 20.0
-theme_override_fonts/font = ExtResource("7_v606x")
-theme_override_font_sizes/font_size = 42
-text = "SCORE "
-
-[node name="PointsLabel" type="Label" parent="UI/MarginContainer/ScoreHBox"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 10
-size_flags_vertical = 0
-theme_override_fonts/font = ExtResource("7_v606x")
-theme_override_font_sizes/font_size = 42
-text = "0000"
-
-[node name="LivesHBox" type="HBoxContainer" parent="UI/MarginContainer"]
-layout_mode = 2
-
-[node name="LivesLabel" type="Label" parent="UI/MarginContainer/LivesHBox"]
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_v606x")
-theme_override_font_sizes/font_size = 42
-text = "Lives "
-
-[node name="LivesNumberLabel" type="Label" parent="UI/MarginContainer/LivesHBox"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_fonts/font = ExtResource("7_v606x")
-theme_override_font_sizes/font_size = 42
-text = "0"
-
-[node name="ReadyHBox" type="HBoxContainer" parent="UI/MarginContainer"]
-layout_mode = 2
-
-[node name="ReadyLabel" type="Label" parent="UI/MarginContainer/ReadyHBox"]
+[node name="ReadyLabel" type="Label" parent="UI/MessageHBox"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -173,5 +125,66 @@ theme_override_fonts/font = ExtResource("7_v606x")
 theme_override_font_sizes/font_size = 168
 text = "READY?"
 horizontal_alignment = 1
+
+[node name="WinLabel" type="Label" parent="UI/MessageHBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("7_v606x")
+theme_override_font_sizes/font_size = 124
+text = "YOU WIN!
+TOTAL SCORE - 0000
+
+NICE JOB!
+PRESS ESC TO QUIT
+"
+horizontal_alignment = 1
+
+[node name="ScoreHBox" type="HBoxContainer" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 1142.0
+offset_bottom = 638.0
+
+[node name="ScoreLabel" type="Label" parent="UI/ScoreHBox"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+size_flags_stretch_ratio = 20.0
+theme_override_fonts/font = ExtResource("7_v606x")
+theme_override_font_sizes/font_size = 42
+text = "SCORE "
+
+[node name="PointsLabel" type="Label" parent="UI/ScoreHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("7_v606x")
+theme_override_font_sizes/font_size = 42
+text = "0000"
+
+[node name="LivesHBox" type="HBoxContainer" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 1142.0
+offset_bottom = 638.0
+
+[node name="LivesLabel" type="Label" parent="UI/LivesHBox"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_v606x")
+theme_override_font_sizes/font_size = 42
+text = "Lives "
+
+[node name="LivesNumberLabel" type="Label" parent="UI/LivesHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("7_v606x")
+theme_override_font_sizes/font_size = 42
+text = "0"
 
 [connection signal="timeout" from="InvaderManager/ShotTimer" to="InvaderManager" method="_on_shot_timer_timeout"]

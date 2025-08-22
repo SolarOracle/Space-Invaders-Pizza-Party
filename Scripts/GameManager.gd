@@ -8,6 +8,7 @@ extends Node
 @onready var points_label = %PointsLabel
 @onready var lives_label = %LivesNumberLabel
 @onready var ready_label = %ReadyLabel
+@onready var win_label = %WinLabel
 @onready var scene = $".."
 @onready var bounds_left = get_node("/root/TestScene/Bounds/BoundsLeft")
 @onready var bounds_right = get_node("/root/TestScene/Bounds/BoundsRight")
@@ -25,6 +26,7 @@ func _ready():
 
 func start_delay():
 	ready_label.show()
+	invader_manager.clear_shots.emit()
 	await get_tree().create_timer(1.5).timeout
 	player.active = true
 	activate.emit()
@@ -38,7 +40,14 @@ func lose_game():
 	lives_label.text = ("%s" % lives)
 
 func win_game():
-	pass
+	await get_tree().create_timer(0.5).timeout
+	player.active = false
+	win_label.text = ("""YOU WIN!
+	TOTAL SCORE - %s
+	
+	NICE JOB!
+	PRESS ESC TO QUIT""" % total_score) 
+	win_label.show()
 
 func lose_life():
 	await get_tree().create_timer(1.0).timeout

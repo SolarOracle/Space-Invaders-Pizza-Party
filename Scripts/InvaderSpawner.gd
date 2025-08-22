@@ -9,9 +9,7 @@ const rows = 5
 @export var margin: Vector2 = Vector2(1,1)
 @export var spawn_start: Marker2D
 
-@onready var invader_manager = get_node("/root/TestScene/InvaderManager")
-@onready var bounds_left = get_node("/root/TestScene/Bounds/BoundsLeft")
-@onready var bounds_right = get_node("/root/TestScene/Bounds/BoundsRight")
+@onready var invader_manager = %InvaderManager
 
 var invader_count: int = 0
 
@@ -19,11 +17,6 @@ func _ready():
 	spawn()
 
 func spawn():
-	var test_invader = invader.instantiate()
-	add_child(test_invader)
-	var invader_size = test_invader.get_size()
-	test_invader.queue_free()
-	
 	var spawn_position_x = spawn_start.position.x
 	var spawn_position_y = spawn_start.position.y
 	
