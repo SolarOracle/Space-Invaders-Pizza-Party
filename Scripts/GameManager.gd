@@ -7,6 +7,7 @@ extends Node
 @onready var lives_label = %LivesNumberLabel
 @onready var ready_label = %ReadyLabel
 @onready var win_label = %WinLabel
+@onready var lose_label = %LoseLabel
 @onready var level_label = %LevelLabel
 @onready var pause_menu = %PauseMenu
 @onready var scene = $".."
@@ -34,7 +35,7 @@ func _input(event):
 	if Input.is_action_just_pressed("pause"):
 		if player != null and player.active and invader_manager.invader_count > 0:
 			pause()
-		elif pause_menu.visible == false and win_label.visible:
+		elif (pause_menu.visible == false and win_label.visible) or (pause_menu.visible == false and lose_label.visible):
 			get_tree().quit()
 	
 	if Input.is_action_just_pressed("shoot"):
@@ -61,7 +62,14 @@ func pause():
 func lose_game():
 	await get_tree().create_timer(0.5).timeout
 	activate.emit()
+	if player != null:
+		player.queue_free()
 	lives_label.text = ("%s" % level_definitions.lives)
+	lose_label.text = ("""GAME LOST!
+	FINAL SCORE - %s
+
+	PRESS ESC TO QUIT""" % level_definitions.total_score)
+	lose_label.show()
 
 func win_level():
 	await get_tree().create_timer(0.5).timeout
@@ -96,7 +104,9 @@ func lose_life():
 
 func update_score(score):
 	level_definitions.total_score += score
-	if level_definitions.total_score < 100:
+	if level_definitions.total_score < 10:
+		points_label.text = ("000" + "%s" % level_definitions.total_score)
+	elif level_definitions.total_score < 100:
 		points_label.text = ("00" + "%s" % level_definitions.total_score)
 	elif level_definitions.total_score < 1000:
 		points_label.text = ("0" + "%s" % level_definitions.total_score)
@@ -106,7 +116,7 @@ func update_score(score):
 func _on_player_death():
 	invader_manager.shot_timer.paused = true
 	level_definitions.lives -= 1
-	if level_definitions.lives == 0:
-		lose_game()
-	else:
+	if level_definitions.lives > 0:
 		lose_life()
+	else:
+		lose_game()

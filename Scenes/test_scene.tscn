@@ -142,6 +142,20 @@ PRESS ESC TO QUIT
 "
 horizontal_alignment = 1
 
+[node name="LoseLabel" type="Label" parent="UI/MessageHBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("7_v606x")
+theme_override_font_sizes/font_size = 124
+text = "GAME LOST!
+FINAL SCORE - 0000
+
+PRESS ESC TO QUIT
+"
+horizontal_alignment = 1
+
 [node name="LevelLabel" type="Label" parent="UI/MessageHBox"]
 unique_name_in_owner = true
 visible = false

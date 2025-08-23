@@ -10,7 +10,7 @@ signal update_speed
 signal clear_shots
 
 func _ready():
-	for i in 2:
+	for i in 3:
 		await Engine.get_main_loop().process_frame
 	check_if_shooter.emit()
 
