@@ -20,10 +20,6 @@ signal activate
 signal position_invader_marker
 
 func _ready():
-	if level_definitions.game_level <= 0:
-		level_definitions.game_level = 1
-	if level_definitions.lives <= 0:
-		level_definitions.lives = 3
 	update_score(0)
 	lives_label.text = ("%s" % level_definitions.lives)
 	starting_position = player.position
