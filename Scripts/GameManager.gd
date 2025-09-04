@@ -3,6 +3,7 @@ extends Node
 @onready var player = get_node("/root/TestScene/PlayerTest")
 @onready var load_player = preload("res://Scenes/player_test.tscn")
 @onready var invader_manager = %InvaderManager
+@onready var ufo_spawner = get_node("/root/TestScene/UFOSpawner")
 @onready var points_label = %PointsLabel
 @onready var lives_label = %LivesNumberLabel
 @onready var ready_label = %ReadyLabel
@@ -70,6 +71,8 @@ func lose_game():
 func win_level():
 	await get_tree().create_timer(0.5).timeout
 	player.active = false
+	ufo_spawner.shots_fired = 0
+	ufo_spawner.shots_until_ufo = randi_range(15, 25)
 	level_label.text = ("""LEVEL WON!
 	CURRENT SCORE - %s
 	
@@ -95,6 +98,8 @@ func lose_life():
 	reset_position.emit()
 	activate.emit()
 	player.active = false
+	ufo_spawner.shots_fired = 0
+	ufo_spawner.shots_until_ufo = randi_range(15, 25)
 	lives_label.text = ("%s" % level_definitions.lives)
 	start_delay()
 

@@ -38,6 +38,4 @@ func shoot():
 
 func hit():
 	death.emit()
-	ufo_spawner.shots_fired = 0
-	ufo_spawner.shots_until_ufo = randi_range(15, 25)
 	queue_free()
