@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var weapon = $"Weapon"
 @onready var load_beam = preload("res://Scenes/beam.tscn")
 @onready var beam = load_beam
+@onready var ufo_spawner = $"../UFOSpawner"
 
 var active: bool = false
 var can_shoot: bool = true
@@ -33,7 +34,10 @@ func shoot():
 	scene.add_child(beam)
 	beam.global_position = weapon.global_position
 	can_shoot = false
+	ufo_spawner.shot_fired()
 
 func hit():
 	death.emit()
+	ufo_spawner.shots_fired = 0
+	ufo_spawner.shots_until_ufo = randi_range(15, 25)
 	queue_free()

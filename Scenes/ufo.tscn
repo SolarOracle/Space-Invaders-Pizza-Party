@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwdkpnjbwi3le"]
+
+[ext_resource type="Texture2D" uid="uid://cmm4wcmir7l8w" path="res://Sprites/icon.svg" id="1_1yu4k"]
+[ext_resource type="Script" path="res://Scripts/ufo.gd" id="1_acxvr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yu748"]
+size = Vector2(160, 128)
+
+[node name="UFO" type="CharacterBody2D"]
+modulate = Color(0, 1, 0, 1)
+scale = Vector2(0.333, 0.333)
+collision_layer = 128
+collision_mask = 130
+script = ExtResource("1_acxvr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 3.14159
+scale = Vector2(1.25, 1)
+texture = ExtResource("1_1yu4k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yu748")

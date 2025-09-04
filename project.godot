@@ -63,6 +63,7 @@ pause={
 2d_physics/layer_5="Blocks"
 2d_physics/layer_6="Enemy Detection"
 2d_physics/layer_7="Enemy Projectiles"
+2d_physics/layer_8="UFO"
 
 [rendering]
 
