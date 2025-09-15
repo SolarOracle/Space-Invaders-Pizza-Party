@@ -21,8 +21,7 @@ level_definitions="*res://Scripts/LevelDefinitions.gd"
 
 [display]
 
-window/stretch/mode="viewport"
-window/stretch/aspect="expand"
+window/stretch/mode="canvas_items"
 
 [dotnet]
 
@@ -69,4 +68,4 @@ pause={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+environment/defaults/default_clear_color=Color(0, 0.0509804, 0.211765, 1)

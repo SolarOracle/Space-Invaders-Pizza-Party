@@ -97,3 +97,8 @@ func _on_reset_position():
 
 func _on_activate():
 	active = !active
+	if !active:
+		$AnimationPlayer.play("RESET")
+	elif active:
+		$AnimationPlayer.play("Idle")
+		
