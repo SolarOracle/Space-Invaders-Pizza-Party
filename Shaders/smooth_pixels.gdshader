@@ -24,6 +24,7 @@ varying flat vec4 modulate;
 
 void vertex() {
 	modulate = COLOR;
+	VERTEX = VERTEX;
 }
 
 void fragment()
