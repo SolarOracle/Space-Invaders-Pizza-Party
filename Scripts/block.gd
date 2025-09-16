@@ -16,11 +16,11 @@ func destroy():
 	queue_free()
 
 func change_color():
-	if current_health < 9 and current_health > 6:
+	if current_health < 9 and current_health > 6 and modulate != Color(0.678431, 1, 0.184314, 1):
 		modulate = Color(0.678431, 1, 0.184314, 1)
-	elif current_health < 7 and current_health > 4:
+	elif current_health < 7 and current_health > 4 and modulate != Color(1, 1, 0, 1):
 		modulate = Color(1, 1, 0, 1)
-	elif current_health < 5 and current_health > 2:
+	elif current_health < 5 and current_health > 2 and modulate != Color(1, 0.270588, 0, 1):
 		modulate = Color(1, 0.270588, 0, 1)
-	elif current_health < 3 and current_health > 0:
+	elif current_health < 3 and current_health > 0 and modulate != Color(1,0,0,1):
 		modulate = Color(1, 0, 0, 1)
