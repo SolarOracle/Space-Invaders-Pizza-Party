@@ -31,7 +31,7 @@ func spawn():
 			i = float(i)
 			new_invader.set_position(Vector2(x, y))
 			invader_manager.invader_count += 1
-			new_invader.level = 3.0 - (ceil(float(i / 2.0)))
+			new_invader.level = 3.0 - (ceil(i / 2.0))
 
 
 func _on_game_manager_position_invader_marker(level):

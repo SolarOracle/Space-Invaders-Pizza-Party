@@ -10,6 +10,8 @@ extends CharacterBody2D
 @onready var beam = load_beam
 @onready var invader_manager = $"../../InvaderManager"
 @onready var game_manager = $"../../GameManager"
+@onready var squid_sprite = preload("res://Sprites/Alien-export.png")
+@onready var bat_sprite = preload("res://Sprites/Alien2-export.png")
 
 var active: bool = false
 var direction: int = -1
@@ -23,7 +25,15 @@ var dead: bool = false
 var initial_position: Vector2
 
 func _ready():
+	var sprites = {
+		0: null,
+		1: bat_sprite,
+		2: bat_sprite,
+		3: squid_sprite
+	}
+	
 	await Engine.get_main_loop().process_frame
+	$Sprite2D.texture = sprites[level]
 	connect_with_bounds()
 	initial_position = position
 	invader_manager.check_if_shooter.connect(_on_check_if_shooter)
@@ -97,8 +107,9 @@ func _on_reset_position():
 
 func _on_activate():
 	active = !active
-	if !active:
+	if !active and level_definitions.lives >= 1:
 		$AnimationPlayer.play("RESET")
 	elif active:
 		$AnimationPlayer.play("Idle")
-		
+	else:
+		pass
