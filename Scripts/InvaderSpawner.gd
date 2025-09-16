@@ -35,7 +35,4 @@ func spawn():
 
 
 func _on_game_manager_position_invader_marker(level):
-	if level == 1:
-		spawn_start.position.y = 50
-	elif level == 2:
-		spawn_start.position.y = 110
+	spawn_start.position.y = 50 + ((level - 1) * 60)

@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://qkxa628xx7ej"]
+[gd_scene load_steps=8 format=3 uid="uid://qkxa628xx7ej"]
 
 [ext_resource type="Script" uid="uid://cq615h6ng25j" path="res://Scripts/invader.gd" id="1_junes"]
 [ext_resource type="Shader" path="res://Shaders/smooth_pixels.gdshader" id="2_vss4j"]
-[ext_resource type="Texture2D" uid="uid://djx7leprw8sdx" path="res://Sprites/Alien2-export.png" id="3_n14cu"]
 
 [sub_resource type="Animation" id="Animation_6x2ew"]
 resource_name = "Idle"
@@ -64,7 +63,6 @@ material = SubResource("ShaderMaterial_ccsjb")
 use_parent_material = true
 position = Vector2(0, 0.61503553)
 scale = Vector2(1, 1.0058255)
-texture = ExtResource("3_n14cu")
 hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
