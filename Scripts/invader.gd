@@ -12,6 +12,7 @@ extends CharacterBody2D
 @onready var game_manager = $"../../GameManager"
 @onready var squid_sprite = preload("res://Sprites/Alien-export.png")
 @onready var bat_sprite = preload("res://Sprites/Alien2-export.png")
+@onready var mouth_sprite = preload("res://Sprites/Alien3-export.png")
 
 var active: bool = false
 var direction: int = -1
@@ -27,7 +28,7 @@ var initial_position: Vector2
 func _ready():
 	var sprites = {
 		1: bat_sprite,
-		2: bat_sprite,
+		2: mouth_sprite,
 		3: squid_sprite
 	}
 	
