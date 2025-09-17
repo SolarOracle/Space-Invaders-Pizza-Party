@@ -28,7 +28,7 @@ func _ready():
 	position_invader_marker.emit(level_definitions.game_level)
 	start_delay()
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("pause"):
 		if player != null and player.active and invader_manager.invader_count > 0:
 			pause()

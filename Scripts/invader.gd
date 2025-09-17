@@ -26,7 +26,6 @@ var initial_position: Vector2
 
 func _ready():
 	var sprites = {
-		0: null,
 		1: bat_sprite,
 		2: bat_sprite,
 		3: squid_sprite
@@ -86,10 +85,10 @@ func check_position():
 	if position.y >= 475:
 		game_manager.lose_game()
 
-func get_score():
-	score = level * 10
-
-func _on_enemy_detection_body_entered(body):
+func get_score():   
+	score = level * 10 
+  
+func _on_enemy_detection_body_entered(_body):
 	previous_direction = direction
 	moving_down = true
 	current_height = position
